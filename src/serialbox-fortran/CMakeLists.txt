@@ -15,7 +15,7 @@ if(SERIALBOX_ENABLE_FORTRAN)
   add_library(SerialboxFortranSerializeObjects OBJECT ${SOURCES_FORTRAN_SERIALIZE})
   target_include_directories(SerialboxFortranSerializeObjects
     PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src>
         $<INSTALL_INTERFACE:include>
     )
   

@@ -22,7 +22,7 @@ install(EXPORT SerialboxTargets
 )
 
 ## Generate and install SerialboxConfig.cmake
-configure_package_config_file(${CMAKE_SOURCE_DIR}/cmake/SerialboxConfig.cmake.in
+configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/SerialboxConfig.cmake.in
     "${PROJECT_BINARY_DIR}/cmake/SerialboxConfig.cmake"
     INSTALL_DESTINATION ${CMAKE_INSTALL_DIR}
     PATH_VARS CMAKE_INSTALL_DIR PYTHON_INSTALL_DIR
@@ -30,7 +30,7 @@ configure_package_config_file(${CMAKE_SOURCE_DIR}/cmake/SerialboxConfig.cmake.in
 install(FILES "${PROJECT_BINARY_DIR}/cmake/SerialboxConfig.cmake" DESTINATION cmake)
 
 ## Install SerialboxTooling.cmake
-install(FILES ${CMAKE_SOURCE_DIR}/cmake/SerialboxTooling.cmake DESTINATION cmake/)
+install(FILES ${PROJECT_SOURCE_DIR}/cmake/SerialboxTooling.cmake DESTINATION cmake/)
 
 # Generate and install SerialboxConfigVersion.cmake
 write_basic_package_version_file(
@@ -66,7 +66,7 @@ endif()
 
 set(CMAKE_INSTALL_DIR ${PROJECT_SOURCE_DIR}/cmake)
 set(PYTHON_INSTALL_DIR ${PROJECT_SOURCE_DIR}/src/serialbox-python)
-configure_package_config_file(${CMAKE_SOURCE_DIR}/cmake/SerialboxConfig.cmake.in
+configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/SerialboxConfig.cmake.in
     ${PROJECT_BINARY_DIR}/SerialboxConfig.cmake
     INSTALL_DESTINATION ${PROJECT_BINARY_DIR}
     PATH_VARS CMAKE_INSTALL_DIR PYTHON_INSTALL_DIR

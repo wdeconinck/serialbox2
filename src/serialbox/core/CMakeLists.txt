@@ -74,7 +74,7 @@ set(SOURCES
 add_library(SerialboxObjects OBJECT ${SOURCES})
 target_include_directories(SerialboxObjects
     PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src>
         $<INSTALL_INTERFACE:include>
     )
 target_link_libraries(SerialboxObjects PRIVATE Boost::boost)

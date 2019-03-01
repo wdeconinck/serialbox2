@@ -58,7 +58,7 @@ if(SERIALBOX_ENABLE_C)
   add_library(SerialboxCObjects OBJECT ${SOURCES})
   target_include_directories(SerialboxCObjects
     PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src>
         $<INSTALL_INTERFACE:include>
     )
   target_link_libraries(SerialboxCObjects PUBLIC Boost::boost)

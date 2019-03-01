@@ -20,7 +20,7 @@ cmake_minimum_required(VERSION 3.9.0)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_C_EXTENSIONS OFF)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/modules")
 include(ExternalProject)
 include(CMakeParseArguments)
 include(CheckCXXCompilerFlag)
@@ -103,13 +103,13 @@ endif(NOT CMAKE_BUILD_TYPE)
 add_custom_target(clean-all
                   COMMAND ${CMAKE_MAKE_PROGRAM} clean
                   COMMAND ${CMAKE_COMMAND} -P  
-                  "${CMAKE_SOURCE_DIR}/cmake/modules/SerialboxCleanAll.cmake")
+                  "${PROJECT_SOURCE_DIR}/cmake/modules/SerialboxCleanAll.cmake")
                   
 # We need thread support
 find_package(Threads REQUIRED)
 
 # Set script directory
-set(SCRIPT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tools)
+set(SCRIPT_DIR ${PROJECT_CURRENT_SOURCE_DIR}/tools)
 
 # If we build the Fortran Interface, we need a Fortran compiler
 if(SERIALBOX_ENABLE_FORTRAN)
