@@ -47,7 +47,7 @@ if(SERIALBOX_ENABLE_PYTHON)
                     COMMAND ${REMOVE_OBSOLETE_SYMLINKS_OR_NOP}
                     COMMAND ${CMAKE_COMMAND} -E copy_directory
                     ${PROJECT_SOURCE_DIR}/src/serialbox-python/serialbox
-                    ${CMAKE_BINARY_DIR}/src/serialbox-python/serialbox
+                    ${PROJECT_BINARY_DIR}/src/serialbox-python/serialbox
                     DEPENDS "${SERIALBOX_PYTHON_SOURCE}")
   add_dependencies(SerialboxCShared SerialboxPython)
 
@@ -82,7 +82,7 @@ if(SERIALBOX_ENABLE_SDB)
   add_custom_target(sdbPython
                     COMMAND ${CMAKE_COMMAND} -E copy_directory
                     ${PROJECT_SOURCE_DIR}/src/serialbox-python/sdb
-                    ${CMAKE_BINARY_DIR}/src/serialbox-python/sdb
+                    ${PROJECT_BINARY_DIR}/src/serialbox-python/sdb
                     DEPENDS "${SDB_PYTHON_SOURCE}")
   add_dependencies(SerialboxPython sdbPython)
 

@@ -105,16 +105,4 @@ if(BUILD_SHARED_LIBS)
     set_property(TARGET SerialboxObjects PROPERTY POSITION_INDEPENDENT_CODE 1)
 endif()
 
-install(TARGETS SerialboxStatic SerialboxObjects
-    EXPORT SerialboxTargets
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
-    )
-
-if(BUILD_SHARED_LIBS)
-    install(TARGETS SerialboxShared
-        EXPORT SerialboxTargets
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib
-        )
-endif()
+serialbox_install_targets( TARGETS SerialboxStatic SerialboxObjects SerialboxShared )

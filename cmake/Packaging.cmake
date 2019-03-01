@@ -17,7 +17,7 @@ set(PYTHON_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/python)
 
 install(EXPORT SerialboxTargets
     FILE SerialboxTargets.cmake
-    NAMESPACE Serialbox::
+    NAMESPACE ${${PROJECT_NAME}_NAMESPACE}
     DESTINATION ${CMAKE_INSTALL_DIR}
 )
 
@@ -41,34 +41,23 @@ write_basic_package_version_file(
 install(FILES "${PROJECT_BINARY_DIR}/cmake/SerialboxConfigVersion.cmake" DESTINATION cmake)
 
 ## For build tree
-export(TARGETS SerialboxStatic SerialboxObjects SerialboxFilesytemTarget
-    FILE ${PROJECT_BINARY_DIR}/SerialboxTargets.cmake
-    NAMESPACE Serialbox::
-)
-if(SERIALBOX_HAS_NETCDF)
-    export(TARGETS NETCDF_TARGET
-        APPEND FILE ${PROJECT_BINARY_DIR}/SerialboxTargets.cmake
-        NAMESPACE Serialbox::
-    )
-endif()
-if(SERIALBOX_ENABLE_C)
-    export(TARGETS SerialboxCStatic SerialboxCObjects
-        APPEND FILE ${PROJECT_BINARY_DIR}/SerialboxTargets.cmake
-        NAMESPACE Serialbox::
-    )
-endif()
-if(SERIALBOX_ENABLE_FORTRAN)
-    export(TARGETS SerialboxFortranStatic SerialboxFortranObjects SerialboxFortranSerializeObjects
-        APPEND FILE ${PROJECT_BINARY_DIR}/SerialboxTargets.cmake
-        NAMESPACE Serialbox::
-    )
-endif()
 
 set(CMAKE_INSTALL_DIR ${PROJECT_SOURCE_DIR}/cmake)
 set(PYTHON_INSTALL_DIR ${PROJECT_SOURCE_DIR}/src/serialbox-python)
+
+
+set( ${PROJECT_NAME}_DIR ${PROJECT_BINARY_DIR} CACHE STRING "" )
+
+foreach( target ${${PROJECT_NAME}_PUBLIC_TARGETS} )
+  list( APPEND SERIALBOX_TARGETS ${${PROJECT_NAME}_NAMESPACE}${target} )
+endforeach()
+
+set( ${PROJECT_NAME}_TARGETS_EXPORTED TRUE CACHE STRING "" )
+
 configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/SerialboxConfig.cmake.in
     ${PROJECT_BINARY_DIR}/SerialboxConfig.cmake
     INSTALL_DESTINATION ${PROJECT_BINARY_DIR}
+    INSTALL_PREFIX ${PROJECT_BINARY_DIR}
     PATH_VARS CMAKE_INSTALL_DIR PYTHON_INSTALL_DIR
 )
 write_basic_package_version_file(
@@ -76,3 +65,4 @@ write_basic_package_version_file(
   VERSION ${Serialbox_VERSION_STRING}
   COMPATIBILITY AnyNewerVersion
 )
+

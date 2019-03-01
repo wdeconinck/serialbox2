@@ -45,7 +45,9 @@ set(SERIALBOX_REQUIRED_BOOST_COMPONENTS "@REQUIRED_BOOST_COMPONENTS@")
 #====--------------------------------------------------------------------------------------------===
 
 # Import library targets 
-include("${CMAKE_CURRENT_LIST_DIR}/SerialboxTargets.cmake")
+if( NOT @PROJECT_NAME@_TARGETS_EXPORTED )
+  include("${CMAKE_CURRENT_LIST_DIR}/SerialboxTargets.cmake")
+endif()
 
 set(SERIALBOX_HAS_SHARED_LIBRARY FALSE)
 if(TARGET Serialbox::SerialboxShared)
@@ -61,36 +63,33 @@ if(TARGET Serialbox::SerialboxFortranStatic)
 endif()
 
 # Report findings
-message(STATUS "Found Serialbox version: ${SERIALBOX_VERSION}")
 
-get_property(_static_lib TARGET Serialbox::SerialboxStatic PROPERTY LOCATION)
-message(STATUS "  Static serialbox: ${_static_lib}")
-
-if(SERIALBOX_HAS_SHARED_LIBRARY)
-  get_property(_shared_lib TARGET Serialbox::SerialboxShared PROPERTY LOCATION)
-  message(STATUS "  Shared serialbox: ${_shared_lib}")
-endif()
-
-if(SERIALBOX_HAS_C)
-  get_property(_static_lib TARGET Serialbox::SerialboxCStatic PROPERTY LOCATION)
-  message(STATUS "  Static serialbox-c: ${_static_lib}")
-
-  if(SERIALBOX_HAS_SHARED_LIBRARY)
-    get_property(_shared_lib TARGET Serialbox::SerialboxCShared PROPERTY LOCATION)
-    message(STATUS "  Shared serialbox-c: ${_shared_lib}")
+function( serialbox_print_targets )
+  message( STATUS "Serialbox exported targets:")
+  foreach( target ${ARGV} )
+    if( TARGET ${target} )
+      message( STATUS "  ${target}" )
+      get_target_property( _imported ${target} IMPORTED )
+      if( _imported )
+        get_target_property( _location ${target} LOCATION )
+        message( STATUS "      ${_location}")
+      endif()
+    else()
+      list( APPEND _unavailable_targets ${target} )
+    endif()
+  endforeach()
+  if( _unavailable_targets )
+    message( STATUS "Serialbox unavailable targets:")
+    foreach( target ${_unavailable_targets} )
+      message( STATUS "  ${target}" )
+    endforeach()
   endif()
-endif(SERIALBOX_HAS_C)
+endfunction()
 
-if(SERIALBOX_HAS_FORTRAN)
-  get_property(_static_lib TARGET Serialbox::SerialboxFortranStatic PROPERTY LOCATION)
-  message(STATUS "  Static serialbox FORTRAN: ${_static_lib}")
 
-  if(SERIALBOX_HAS_SHARED_LIBRARY)
-    get_property(_shared_lib TARGET Serialbox::SerialboxFortranShared PROPERTY LOCATION)
-    message(STATUS "  Shared serialbox FORTRAN: ${_shared_lib}")
-  endif()
+message(STATUS "Found Serialbox (version: ${SERIALBOX_VERSION}) in ${PACKAGE_PREFIX_DIR}" )
 
-endif(SERIALBOX_HAS_FORTRAN)
+serialbox_print_targets( @SERIALBOX_TARGETS@ )
 
 #===---------------------------------------------------------------------------------------------===
 #   Find external libraries

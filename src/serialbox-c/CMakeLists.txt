@@ -78,18 +78,7 @@ if(SERIALBOX_ENABLE_C)
     set_property(TARGET SerialboxCObjects PROPERTY POSITION_INDEPENDENT_CODE 1)
   endif()
   
-  install(TARGETS SerialboxCStatic SerialboxCObjects
-    EXPORT SerialboxTargets
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
-    )
-  
-  if(BUILD_SHARED_LIBS)
-    install(TARGETS SerialboxCShared
-        EXPORT SerialboxTargets
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib
-        )
-  endif()
+  serialbox_install_targets( PUBLIC  TARGETS SerialboxCStatic SerialboxCShared )
+  serialbox_install_targets( PRIVATE TARGETS SerialboxCObjects )
 endif()
 
